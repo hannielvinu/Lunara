@@ -61,6 +61,9 @@ def run_tests():
             f"/api/results/{result_id}/confidence",
             f"/api/results/{result_id}/risk",
             f"/api/results/{result_id}/features",
+            f"/api/results/{result_id}/trust",
+            f"/api/results/{result_id}/analysis",
+            f"/api/results/{result_id}/report",
             f"/api/metrics/{result_id}"
         ]
         for ep in endpoints:

@@ -19,6 +19,12 @@ const config: Config = {
           300: "#090d15",
           400: "#05080d",
         },
+        accent: {
+          blue: "#6389ff",
+          violet: "#8b7cf6",
+          indigo: "#4f6adb",
+          sky: "#38bdf8",
+        },
         lunar: {
           cyan: "#22d3ee",
           glow: "#06b6d4",
@@ -27,6 +33,11 @@ const config: Config = {
           rose: "#f43f5e",
           purple: "#8b5cf6",
           silver: "#94a3b8"
+        },
+        trust: {
+          high: "#34d399",
+          moderate: "#fbbf24",
+          low: "#f87171",
         }
       },
       fontFamily: {
@@ -35,7 +46,6 @@ const config: Config = {
       },
       animation: {
         "pulse-subtle": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "orbit-spin": "spin 45s linear infinite",
       }
     },
   },

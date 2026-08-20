@@ -3,32 +3,30 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  Gauge, 
-  Globe2, 
-  Sparkles, 
-  Microscope, 
-  SplitSquareVertical, 
-  Database, 
-  BookOpenCheck 
+import {
+  Home,
+  ScanSearch,
+  LayoutGrid,
+  SplitSquareVertical,
+  ShieldCheck,
+  Database,
 } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Mission Control", href: "/", icon: Gauge },
-    { name: "Planetary Explorer", href: "/explorer", icon: Globe2 },
-    { name: "Super-Resolution Lab", href: "/enhance", icon: Sparkles },
-    { name: "Scientific Analysis", href: "/analysis", icon: Microscope },
+    { name: "Home", href: "/", icon: Home },
+    { name: "Analyze", href: "/enhance", icon: ScanSearch },
+    { name: "Results", href: "/results", icon: LayoutGrid },
     { name: "Compare", href: "/compare", icon: SplitSquareVertical },
+    { name: "Scientific Trust", href: "/analysis", icon: ShieldCheck },
     { name: "Datasets", href: "/datasets", icon: Database },
-    { name: "Research", href: "/research", icon: BookOpenCheck },
   ];
 
   return (
-    <nav className="border-b border-white/5 bg-surface-400/80 backdrop-blur-sm px-4">
-      <div className="max-w-7xl mx-auto flex items-center gap-1 overflow-x-auto py-1.5 scrollbar-none">
+    <nav className="border-b border-white/[0.04] bg-surface-400/60 backdrop-blur-sm px-4">
+      <div className="max-w-7xl mx-auto flex items-center gap-0.5 overflow-x-auto py-1 scrollbar-none">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -38,11 +36,11 @@ export default function Navbar() {
               href={item.href}
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-medium transition-all whitespace-nowrap ${
                 isActive
-                  ? "bg-cyan-950/60 text-cyan-300 border border-cyan-500/30 shadow-[0_0_15px_-3px_rgba(6,182,212,0.2)] font-semibold"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                  ? "bg-accent-blue/10 text-accent-blue border border-accent-blue/20 font-semibold"
+                  : "text-slate-500 hover:text-slate-300 hover:bg-white/[0.03]"
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-cyan-400" : "text-slate-400"}`} />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? "text-accent-blue" : "text-slate-500"}`} />
               <span>{item.name}</span>
             </Link>
           );
