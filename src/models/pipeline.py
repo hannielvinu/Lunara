@@ -87,15 +87,15 @@ class LunaraPipeline:
         
         annotated_img = self.feature_detector.annotate_image(enhanced_img, detected_features)
 
-        # 4. Metrics Evaluation (if ground truth available)
+        # 4. Metrics Evaluation (if ground_truth available)
         metrics = {}
         if ground_truth is not None:
             if model_choice.lower() == "bicubic":
-                metrics = self.bicubic.evaluate(enhanced_img, ground_truth)
+                metrics = self.bicubic.evaluate(enhanced_img, ground_truth, dem=dem)
             elif model_choice.lower() in ["ai_baseline", "baseline", "sr_baseline"]:
-                metrics = self.ai_baseline.evaluate(enhanced_img, ground_truth)
+                metrics = self.ai_baseline.evaluate(enhanced_img, ground_truth, dem=dem)
             else:
-                metrics = self.lunara.evaluate(enhanced_img, ground_truth)
+                metrics = self.lunara.evaluate(enhanced_img, ground_truth, dem=dem)
         else:
             # No-reference proxy metrics
             lap = cv2.Laplacian(enhanced_img, cv2.CV_64F)
@@ -108,6 +108,8 @@ class LunaraPipeline:
         elapsed_ms = round((time.time() - start_time) * 1000.0, 1)
 
         # 5. Scientific Provenance Record
+        dem_source = metadata.get("provenance", {}).get("dem_source", "REAL_DEM") if dem is not None else "OPTICAL_PROXY"
+        
         provenance = {
             "mission": metadata.get("mission", "CHANDRAYAAN-2"),
             "instrument": metadata.get("instrument", "TMC-2/OHRC"),
@@ -122,6 +124,7 @@ class LunaraPipeline:
             "input_dimensions": list(lr_image.shape[:2]),
             "output_dimensions": list(enhanced_img.shape[:2]),
             "dem_used": dem is not None,
+            "dem_source": dem_source,
             "solar_geometry": solar_angles,
             "processing_latency_ms": elapsed_ms,
             "scientific_disclaimer": self.feature_detector.disclaimer,

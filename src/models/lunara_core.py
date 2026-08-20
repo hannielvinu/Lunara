@@ -169,7 +169,7 @@ class LunaraModel:
         unsharp = cv2.addWeighted(out_scaled, 1.35, gaussian_blur, -0.35, 0)
         return np.clip(unsharp, 0, 255).astype(np.uint8)
 
-    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray) -> dict:
+    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray, dem: np.ndarray = None) -> dict:
         """Compute comprehensive reconstruction and scientific consistency metrics."""
         if enhanced.shape != ground_truth.shape:
             enhanced = cv2.resize(enhanced, (ground_truth.shape[1], ground_truth.shape[0]))
@@ -187,6 +187,28 @@ class LunaraModel:
         # Learned Perceptual / High-Frequency Error Proxy (LPIPS Proxy)
         lpips_proxy = float(np.mean((cv2.Laplacian(ground_truth, cv2.CV_32F) - cv2.Laplacian(enhanced, cv2.CV_32F))**2) / 1000.0)
 
+        # Physics consistency score calculation
+        physics_score = None
+        physics_status = "UNAVAILABLE"
+        
+        if dem is not None:
+            # Resize DEM to match ground truth size
+            dem_resized = cv2.resize(dem, (ground_truth.shape[1], ground_truth.shape[0]), interpolation=cv2.INTER_CUBIC)
+            dem_dy, dem_dx = np.gradient(dem_resized.astype(np.float32))
+            dem_slope = np.sqrt(dem_dx**2 + dem_dy**2)
+            dem_slope_norm = dem_slope / (np.percentile(dem_slope, 95) + 1e-6)
+            
+            # Enhanced image gradients
+            opt_gy = cv2.Sobel(enhanced, cv2.CV_32F, 0, 1, ksize=3)
+            opt_gx = cv2.Sobel(enhanced, cv2.CV_32F, 1, 0, ksize=3)
+            opt_grad = np.sqrt(opt_gx**2 + opt_gy**2)
+            opt_grad_norm = opt_grad / (np.percentile(opt_grad, 95) + 1e-6)
+            
+            # Correlation between slope and image gradients
+            correlation = 1.0 - np.mean(np.clip(np.abs(dem_slope_norm - opt_grad_norm), 0.0, 1.0))
+            physics_score = round(float(correlation), 4)
+            physics_status = "COMPUTED"
+
         return {
             "model": self.model_name,
             "version": self.model_version,
@@ -195,6 +217,8 @@ class LunaraModel:
             "mae": round(mae, 2),
             "rmse": round(rmse, 2),
             "edge_preservation_index": round(max(0.0, min(1.0, epi)), 4),
-            "perceptual_error_lpips": round(min(0.5, max(0.01, lpips_proxy)), 4),
-            "physics_consistency_score": 0.942
+            "perceptual_similarity_proxy": round(min(0.5, max(0.01, lpips_proxy)), 4),
+            "perceptual_metric_note": "This is a proxy metric and is not LPIPS.",
+            "physics_consistency_score": physics_score,
+            "physics_consistency_status": physics_status
         }

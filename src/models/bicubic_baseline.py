@@ -20,8 +20,8 @@ class BicubicBaseline:
         enhanced = cv2.resize(lr_img, (hr_w, hr_h), interpolation=cv2.INTER_CUBIC)
         return np.clip(enhanced, 0, 255).astype(np.uint8)
 
-    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray) -> dict:
-        """Compute standard reconstruction metrics against high-resolution ground truth."""
+    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray, dem: np.ndarray = None) -> dict:
+        """Compute basic reconstruction metrics for baseline comparison."""
         if enhanced.shape != ground_truth.shape:
             enhanced = cv2.resize(enhanced, (ground_truth.shape[1], ground_truth.shape[0]))
 

@@ -97,8 +97,8 @@ class AIBaselineModel:
         out_uint8 = np.clip(out_np * 255.0, 0, 255).astype(np.uint8)
         return out_uint8
 
-    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray) -> dict:
-        """Compute reconstruction metrics."""
+    def evaluate(self, enhanced: np.ndarray, ground_truth: np.ndarray, dem: np.ndarray = None) -> dict:
+        """Compute reconstruction metrics for baseline AI model."""
         if enhanced.shape != ground_truth.shape:
             enhanced = cv2.resize(enhanced, (ground_truth.shape[1], ground_truth.shape[0]))
 

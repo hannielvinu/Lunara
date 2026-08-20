@@ -142,6 +142,7 @@ class ProvenanceRecord(BaseModel):
     input_dimensions: List[int]
     output_dimensions: List[int]
     dem_used: bool
+    dem_source: str
     solar_geometry: Dict[str, float]
     processing_latency_ms: float
     scientific_disclaimer: str
