@@ -650,6 +650,73 @@ def get_scientific_report(result_id: str):
     }
     return report
 
+@app.get("/api/results/{result_id}/report.html")
+def get_html_report(result_id: str):
+    """Generate printable HTML scientific report."""
+    from fastapi.responses import HTMLResponse
+    rep = get_scientific_report(result_id)
+    features_rows = "".join([
+        f"<tr><td><code>{f['id']}</code></td><td>{f['type']}</td><td><span class='badge'>{f['status']}</span></td><td>{f['measurement']}</td><td>{f['uncertainty']}</td><td>{f['local_confidence']}%</td></tr>"
+        for f in rep["candidate_surface_features"]["feature_records"]
+    ])
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{rep['title']} - {rep['report_id']}</title>
+<style>
+  body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #07090e; color: #f1f5f9; padding: 32px; line-height: 1.5; }}
+  h1 {{ font-size: 22px; color: #6389ff; margin-bottom: 4px; }}
+  h2 {{ font-size: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; margin-top: 24px; color: #e2e8f0; }}
+  .meta-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 24px; font-size: 12px; margin-top: 8px; font-family: monospace; }}
+  table {{ width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; font-family: monospace; }}
+  th, td {{ padding: 8px 10px; border-bottom: 1px solid #1e293b; text-align: left; }}
+  th {{ background: #0e141f; color: #94a3b8; text-transform: uppercase; font-size: 10px; }}
+  .badge {{ padding: 2px 6px; border-radius: 4px; font-size: 10px; background: rgba(99,137,255,0.15); color: #6389ff; border: 1px solid rgba(99,137,255,0.3); }}
+  .notice {{ background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); padding: 12px; border-radius: 8px; font-size: 11px; margin-top: 24px; color: #cbd5e1; }}
+  @media print {{ body {{ background: white; color: black; }} th {{ background: #eee; color: black; }} td, th {{ border-bottom: 1px solid #ddd; }} .badge {{ border: 1px solid #666; color: black; }} }}
+</style>
+</head>
+<body>
+<h1>{rep['title']}</h1>
+<div style="font-family: monospace; font-size: 11px; color: #64748b;">Report ID: {rep['report_id']} &bull; Generated: {rep['generated_at']}</div>
+
+<h2>1. Input Observation</h2>
+<div class="meta-grid">
+  <div>Scene ID: <strong>{rep['input_observation']['scene_id']}</strong></div>
+  <div>Mission: <strong>{rep['input_observation']['mission']}</strong></div>
+  <div>Sensor: <strong>{rep['input_observation']['instrument']}</strong></div>
+  <div>Input GSD: <strong>{rep['input_observation']['input_resolution_m']} m/px</strong></div>
+</div>
+
+<h2>2. Reconstruction & Scientific Trust</h2>
+<div class="meta-grid">
+  <div>Recommended Candidate: <strong style="color: #34d399;">{rep['reconstruction_evaluation']['recommended_candidate']}</strong></div>
+  <div>Trust Level: <strong>{rep['reconstruction_evaluation']['trust_classification']}</strong></div>
+  <div>Evidence Coverage: <strong>{rep['reconstruction_evaluation']['evidence_coverage']}</strong></div>
+  <div>Decision Justification: <strong>{rep['reconstruction_evaluation']['recommendation_justification']}</strong></div>
+</div>
+
+<h2>3. Candidate Planetary Surface Features ({rep['candidate_surface_features']['total_candidates']})</h2>
+<table>
+  <thead>
+    <tr><th>Feature ID</th><th>Type</th><th>Status</th><th>Measurement</th><th>Uncertainty</th><th>Confidence</th></tr>
+  </thead>
+  <tbody>
+    {features_rows}
+  </tbody>
+</table>
+
+<h2>4. Scientific Limitations & Notice</h2>
+<div class="notice">
+  <strong>SCIENTIFIC NOTICE:</strong> {rep['scientific_limitations_and_disclaimers']['cartographic_notice']}<br>
+  &bull; Perceptual Metric: {rep['scientific_limitations_and_disclaimers']['perceptual_metric']}<br>
+  &bull; Topographic Elevation Source: {rep['scientific_limitations_and_disclaimers']['dem_source']}
+</div>
+</body>
+</html>"""
+    return HTMLResponse(content=html_content)
+
 @app.get("/api/results/{result_id}/trust")
 def get_trust_evidence(result_id: str):
     """Retrieve full Phase 3 multi-candidate scientific trust evidence and recommendation."""

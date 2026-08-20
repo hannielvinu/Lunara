@@ -211,6 +211,17 @@ function ScientificAnalysisContent() {
 
         {/* Action Buttons: Export Report */}
         <div className="flex items-center gap-2">
+          {result && (
+            <a
+              href={`/api/results/${result.result_id}/report.html`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-lg bg-surface-300 hover:bg-surface-200 border border-white/[0.08] text-slate-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5 text-accent-violet" />
+              <span>Printable Report (HTML)</span>
+            </a>
+          )}
           <button
             onClick={handleExportJson}
             disabled={!result || isExporting}
