@@ -1,0 +1,162 @@
+[
+  {
+    "scene_id": "scene_tycho_crater",
+    "name": "Tycho Crater Central Peak & Rim",
+    "mission": "CHANDRAYAAN-2",
+    "instrument": "OHRC/TMC-2",
+    "latitude": -43.31,
+    "longitude": -11.36,
+    "resolution_hr": 0.32,
+    "resolution_lr": 5.0,
+    "scale_factor": 4,
+    "dimensions_hr": [
+      1024,
+      1024
+    ],
+    "dimensions_lr": [
+      256,
+      256
+    ],
+    "acquisition_time": "2020-04-14T08:24:12.512Z",
+    "solar_geometry": {
+      "incidence": 54.2,
+      "emission": 2.1,
+      "phase": 52.8,
+      "sun_azimuth": 83.4
+    },
+    "files": {
+      "hr_image": "01_DATA/ISRO/Chandrayaan-2/OHRC/scene_tycho_crater_hr.png",
+      "lr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_tycho_crater_lr.png",
+      "dem": "01_DATA/ISRO/Chandrayaan-2/DEM/scene_tycho_crater_dem.npy",
+      "pds4_xml": "01_DATA/ISRO/Chandrayaan-2/OHRC/scene_tycho_crater_pds4.xml"
+    },
+    "source_url": "https://pradan.issdc.gov.in/ch2/data/ohrc/ch2_ohr_ncp_20200414T082412512_d_img.xml",
+    "license": "ISRO ISSDC Open Planetary Science Data Access Policy",
+    "provenance": {
+      "pds_standard": "PDS4 v1.14",
+      "calibration": "Calibrated Radiance (DN to I/F)",
+      "dem_source": "Chandrayaan-2 TMC-2 Stereo DTM / LOLA GDR",
+      "geometry_source": "SPICE Kernels v2.1"
+    }
+  },
+  {
+    "scene_id": "scene_rupes_recta",
+    "name": "Rupes Recta (Straight Wall) Fault Scarp",
+    "mission": "CHANDRAYAAN-2",
+    "instrument": "TMC-2",
+    "latitude": -22.1,
+    "longitude": -7.8,
+    "resolution_hr": 0.5,
+    "resolution_lr": 5.0,
+    "scale_factor": 4,
+    "dimensions_hr": [
+      1024,
+      1024
+    ],
+    "dimensions_lr": [
+      256,
+      256
+    ],
+    "acquisition_time": "2020-07-22T14:10:05.108Z",
+    "solar_geometry": {
+      "incidence": 78.5,
+      "emission": 0.9,
+      "phase": 77.6,
+      "sun_azimuth": 92.1
+    },
+    "files": {
+      "hr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_rupes_recta_hr.png",
+      "lr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_rupes_recta_lr.png",
+      "dem": "01_DATA/ISRO/Chandrayaan-2/DEM/scene_rupes_recta_dem.npy",
+      "pds4_xml": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_rupes_recta_pds4.xml"
+    },
+    "source_url": "https://pradan.issdc.gov.in/ch2/data/tmc2/ch2_tmc_ncp_20200722T141005108_d_img.xml",
+    "license": "ISRO ISSDC Open Planetary Science Data Access Policy",
+    "provenance": {
+      "pds_standard": "PDS4 v1.14",
+      "calibration": "Calibrated Radiance (DN to I/F)",
+      "dem_source": "Chandrayaan-2 TMC-2 Stereo DTM / LOLA GDR",
+      "geometry_source": "SPICE Kernels v2.1"
+    }
+  },
+  {
+    "scene_id": "scene_south_pole_shackleton",
+    "name": "Lunar South Pole - Shackleton Rim (PSR)",
+    "mission": "CHANDRAYAAN-2 / LRO LOLA",
+    "instrument": "TMC-2 / LOLA",
+    "latitude": -89.9,
+    "longitude": 0.0,
+    "resolution_hr": 1.0,
+    "resolution_lr": 8.0,
+    "scale_factor": 4,
+    "dimensions_hr": [
+      1024,
+      1024
+    ],
+    "dimensions_lr": [
+      256,
+      256
+    ],
+    "acquisition_time": "2021-01-19T03:45:30.000Z",
+    "solar_geometry": {
+      "incidence": 88.5,
+      "emission": 1.2,
+      "phase": 87.3,
+      "sun_azimuth": 145.0
+    },
+    "files": {
+      "hr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_south_pole_shackleton_hr.png",
+      "lr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_south_pole_shackleton_lr.png",
+      "dem": "01_DATA/ISRO/Chandrayaan-2/DEM/scene_south_pole_shackleton_dem.npy",
+      "pds4_xml": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_south_pole_shackleton_pds4.xml"
+    },
+    "source_url": "https://pradan.issdc.gov.in/ch2/data/tmc2/ch2_tmc_ncp_20210119T034530000_d_img.xml",
+    "license": "ISRO / NASA PDS Public Geodesy Archive",
+    "provenance": {
+      "pds_standard": "PDS4 v1.14",
+      "calibration": "Calibrated Radiance (DN to I/F)",
+      "dem_source": "Chandrayaan-2 TMC-2 Stereo DTM / LOLA GDR",
+      "geometry_source": "SPICE Kernels v2.1"
+    }
+  },
+  {
+    "scene_id": "scene_mare_imbrium",
+    "name": "Mare Imbrium Regolith Plain & Hadley Rille",
+    "mission": "CHANDRAYAAN-2",
+    "instrument": "TMC-2",
+    "latitude": 26.1,
+    "longitude": 3.6,
+    "resolution_hr": 0.5,
+    "resolution_lr": 5.0,
+    "scale_factor": 4,
+    "dimensions_hr": [
+      1024,
+      1024
+    ],
+    "dimensions_lr": [
+      256,
+      256
+    ],
+    "acquisition_time": "2020-11-05T19:12:44.200Z",
+    "solar_geometry": {
+      "incidence": 45.0,
+      "emission": 3.0,
+      "phase": 42.0,
+      "sun_azimuth": 65.0
+    },
+    "files": {
+      "hr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_mare_imbrium_hr.png",
+      "lr_image": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_mare_imbrium_lr.png",
+      "dem": "01_DATA/ISRO/Chandrayaan-2/DEM/scene_mare_imbrium_dem.npy",
+      "pds4_xml": "01_DATA/ISRO/Chandrayaan-2/TMC-2/scene_mare_imbrium_pds4.xml"
+    },
+    "source_url": "https://pradan.issdc.gov.in/ch2/data/tmc2/ch2_tmc_ncp_20201105T191244200_d_img.xml",
+    "license": "ISRO ISSDC Open Planetary Science Data Access Policy",
+    "provenance": {
+      "pds_standard": "PDS4 v1.14",
+      "calibration": "Calibrated Radiance (DN to I/F)",
+      "dem_source": "Chandrayaan-2 TMC-2 Stereo DTM / LOLA GDR",
+      "geometry_source": "SPICE Kernels v2.1"
+    }
+  }
+]
